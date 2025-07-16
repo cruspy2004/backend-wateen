@@ -91,3 +91,12 @@ build/
 
 # Test artifacts
 test-results/
+
+# WhatsApp session data
+whatsapp-sessions/
+.wwebjs_auth/
+.wwebjs_cache/
+
+# WhatsApp logs
+logs/
+*.log
