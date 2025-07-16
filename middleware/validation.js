@@ -76,10 +76,52 @@ const validateAddMember = [
   validate
 ];
 
+// Helper function to validate phone number format
+const validatePhoneNumber = (phone) => {
+  const phoneRegex = /^[\+]?[1-9]?[0-9]{7,15}$/;
+  return phoneRegex.test(phone.replace(/[\s\-\(\)]/g, ''));
+};
+
+// WhatsApp group creation validation
+const validateWhatsAppGroup = [
+  body('groupName')
+    .trim()
+    .isLength({ min: 2, max: 100 })
+    .withMessage('Group name must be between 2 and 100 characters'),
+  body('participants')
+    .isArray({ min: 1 })
+    .withMessage('At least one participant is required'),
+  body('participants.*')
+    .custom((value) => {
+      if (!validatePhoneNumber(value)) {
+        throw new Error('Invalid phone number format');
+      }
+      return true;
+    }),
+  validate
+];
+
+// WhatsApp group members validation
+const validateWhatsAppGroupMembers = [
+  body('participants')
+    .isArray({ min: 1 })
+    .withMessage('At least one participant is required'),
+  body('participants.*')
+    .custom((value) => {
+      if (!validatePhoneNumber(value)) {
+        throw new Error('Invalid phone number format');
+      }
+      return true;
+    }),
+  validate
+];
+
 export {
   validateRegistration,
   validateLogin,
   validateGroup,
   validateMessage,
-  validateAddMember
+  validateAddMember,
+  validateWhatsAppGroup,
+  validateWhatsAppGroupMembers
 };

@@ -10,6 +10,7 @@ import authRoutes from './routes/auth.js';
 import groupRoutes from './routes/groups.js';
 import userRoutes from './routes/users.js';
 import messageRoutes from './routes/messages.js';
+import whatsappRoutes from './routes/whatsapp.js';
 
 // Import models to establish associations
 import './models/index.js';
@@ -31,6 +32,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/groups', groupRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/messages', messageRoutes);
+app.use('/api/whatsapp', whatsappRoutes);
 
 // Health check endpoint
 app.get('/health', (req, res) => {

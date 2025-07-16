@@ -9,6 +9,9 @@ A backend API for an internal messaging coordination app that helps companies or
 - **Member Management**: Add members to groups with role-based permissions
 - **Message System**: Send messages within groups
 - **User Search**: Search for users by name or email
+- **WhatsApp Integration**: Create and manage WhatsApp groups with QR code authentication
+- **Rate Limiting**: Prevent API abuse with configurable rate limits
+- **Comprehensive Logging**: Detailed logging for all operations
 - **Clean Architecture**: Well-structured codebase following best practices
 
 ## 📋 Prerequisites
@@ -136,6 +139,15 @@ messaging-coordination-api/
 ### Health Check
 - `GET /health` - Server health check
 
+### WhatsApp Integration
+- `GET /api/whatsapp/qr-code` - Generate QR code for WhatsApp authentication
+- `GET /api/whatsapp/status` - Check WhatsApp connection status
+- `POST /api/whatsapp/groups/create` - Create WhatsApp group (protected)
+- `POST /api/whatsapp/groups/:groupId/members/add` - Add members to WhatsApp group (protected)
+- `DELETE /api/whatsapp/groups/:groupId/members/remove` - Remove members from WhatsApp group (protected)
+- `GET /api/whatsapp/groups` - List WhatsApp groups (protected)
+- `GET /api/whatsapp/groups/:groupId` - Get WhatsApp group info (protected)
+
 ## 📝 API Usage Examples
 
 ### Register a new user
@@ -177,6 +189,24 @@ curl -X POST http://localhost:5000/api/messages \\
   -d '{
     "groupId": 1,
     "message": "Hello everyone!"
+  }'
+```
+
+### WhatsApp Integration
+```bash
+# Generate QR code for WhatsApp authentication
+curl -X GET http://localhost:5000/api/whatsapp/qr-code
+
+# Check WhatsApp connection status
+curl -X GET http://localhost:5000/api/whatsapp/status
+
+# Create WhatsApp group
+curl -X POST http://localhost:5000/api/whatsapp/groups/create \\
+  -H "Content-Type: application/json" \\
+  -H "Authorization: Bearer YOUR_JWT_TOKEN" \\
+  -d '{
+    "groupName": "Team Meeting",
+    "participants": ["+1234567890", "+1987654321"]
   }'
 ```
 
